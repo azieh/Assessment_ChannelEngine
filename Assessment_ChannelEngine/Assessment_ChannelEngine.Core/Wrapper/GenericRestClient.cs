@@ -83,7 +83,7 @@ namespace Assessment_ChannelEngine.Core.Wrapper
 
         private string GetCompleteApiUrl(string apiUrl)
         {
-            return $"{_baseUrlAddress}{apiUrl}?apikey={_apiKey}";
+            return $"{_baseUrlAddress}{apiUrl}&apikey={_apiKey}";
         }
     }
 }

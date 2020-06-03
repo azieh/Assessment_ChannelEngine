@@ -1,5 +1,5 @@
-﻿using Assessment_ChannelEngine.Core;
-using Assessment_ChannelEngine.Services.Interfaces;
+﻿using Assessment_ChannelEngine.Common.Interfaces;
+using Assessment_ChannelEngine.Core;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Assessment_ChannelEngine.Services
