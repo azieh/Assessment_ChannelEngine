@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessment_ChannelEngine.We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessment_ChannelEngine.Console", "Assessment_ChannelEngine.Console\Assessment_ChannelEngine.Console.csproj", "{F9BF0C4C-1FEE-489F-9A53-97D6A0485BF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessment_ChannelEngine.UnitTest", "Assessment_ChannelEngine.UnitTest\Assessment_ChannelEngine.UnitTest.csproj", "{32639A18-64B5-4D74-A75B-CE353F4FEAD8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F9BF0C4C-1FEE-489F-9A53-97D6A0485BF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9BF0C4C-1FEE-489F-9A53-97D6A0485BF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9BF0C4C-1FEE-489F-9A53-97D6A0485BF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32639A18-64B5-4D74-A75B-CE353F4FEAD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32639A18-64B5-4D74-A75B-CE353F4FEAD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32639A18-64B5-4D74-A75B-CE353F4FEAD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32639A18-64B5-4D74-A75B-CE353F4FEAD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
