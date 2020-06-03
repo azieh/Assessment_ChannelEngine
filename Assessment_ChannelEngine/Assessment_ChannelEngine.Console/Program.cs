@@ -1,4 +1,5 @@
 ﻿using System;
+using Assessment_ChannelEngine.Console.Interface;
 
 namespace Assessment_ChannelEngine.Console
 {
@@ -6,7 +7,9 @@ namespace Assessment_ChannelEngine.Console
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var consoleHandler = new RegisterContainers().GetService<IConsoleHandler>();
+
+            consoleHandler.Start();
         }
     }
 }
