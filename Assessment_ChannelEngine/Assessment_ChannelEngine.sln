@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessment_ChannelEngine.Web", "Assessment_ChannelEngine.Web\Assessment_ChannelEngine.Web.csproj", "{72F6B11E-8E20-4BB7-B66F-8D51AC6C1A54}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72F6B11E-8E20-4BB7-B66F-8D51AC6C1A54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72F6B11E-8E20-4BB7-B66F-8D51AC6C1A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72F6B11E-8E20-4BB7-B66F-8D51AC6C1A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72F6B11E-8E20-4BB7-B66F-8D51AC6C1A54}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0872911E-4B82-40F3-92DF-1DF3EA6CC286}
+	EndGlobalSection
+EndGlobal
