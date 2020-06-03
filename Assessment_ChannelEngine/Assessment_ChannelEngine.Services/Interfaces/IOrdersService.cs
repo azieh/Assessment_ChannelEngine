@@ -1,4 +1,4 @@
-﻿namespace Assessment_ChannelEngine.Core.Interface
+﻿namespace Assessment_ChannelEngine.Services.Interfaces
 {
     public interface IOrdersService
     {

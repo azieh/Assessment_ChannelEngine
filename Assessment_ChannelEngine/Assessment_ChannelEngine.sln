@@ -5,15 +5,15 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessment_ChannelEngine.Web", "Assessment_ChannelEngine.Web\Assessment_ChannelEngine.Web.csproj", "{72F6B11E-8E20-4BB7-B66F-8D51AC6C1A54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessment_ChannelEngine.Console", "Assessment_ChannelEngine.Console\Assessment_ChannelEngine.Console.csproj", "{F9BF0C4C-1FEE-489F-9A53-97D6A0485BF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessment_ChannelEngine.Console", "Assessment_ChannelEngine.Console\Assessment_ChannelEngine.Console.csproj", "{F9BF0C4C-1FEE-489F-9A53-97D6A0485BF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessment_ChannelEngine.UnitTest", "Assessment_ChannelEngine.UnitTest\Assessment_ChannelEngine.UnitTest.csproj", "{32639A18-64B5-4D74-A75B-CE353F4FEAD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessment_ChannelEngine.UnitTest", "Assessment_ChannelEngine.UnitTest\Assessment_ChannelEngine.UnitTest.csproj", "{32639A18-64B5-4D74-A75B-CE353F4FEAD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessment_ChannelEngine.Core", "Assessment_ChannelEngine.Core\Assessment_ChannelEngine.Core.csproj", "{27D3C126-6038-4050-87EA-6DE2EF0939B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessment_ChannelEngine.Core", "Assessment_ChannelEngine.Core\Assessment_ChannelEngine.Core.csproj", "{27D3C126-6038-4050-87EA-6DE2EF0939B0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{175042AB-9A2E-40A6-99A5-2464F1C33091}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{175042AB-9A2E-40A6-99A5-2464F1C33091}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessment_ChannelEngine.Services", "Assessment_ChannelEngine.Services\Assessment_ChannelEngine.Services.csproj", "{FC698536-E266-4D36-877B-4C29A5333F18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessment_ChannelEngine.Services", "Assessment_ChannelEngine.Services\Assessment_ChannelEngine.Services.csproj", "{FC698536-E266-4D36-877B-4C29A5333F18}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{208360F1-8150-43CD-A9CB-C14FC93E1332}"
 EndProject
