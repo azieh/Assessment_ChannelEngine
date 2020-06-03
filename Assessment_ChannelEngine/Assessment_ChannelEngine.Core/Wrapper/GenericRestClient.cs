@@ -8,7 +8,7 @@ using Assessment_ChannelEngine.Services.Interfaces;
 
 namespace Assessment_ChannelEngine.Core.Wrapper
 {
-    internal class GenericRestClient : IGenericRestClient, IDisposable
+    public class GenericRestClient : IGenericRestClient, IDisposable
     {
         private readonly IHttpClientWrapper _httpClientWrapper;
         private string _apiKey;
@@ -32,8 +32,8 @@ namespace Assessment_ChannelEngine.Core.Wrapper
         /// <inheritdoc />
         public void Configure(string baseUrlAddress, string apiKey)
         {
-            _baseUrlAddress = baseUrlAddress;
-            _apiKey = apiKey;
+            _baseUrlAddress = baseUrlAddress ?? throw new ArgumentNullException(nameof(baseUrlAddress));
+            _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
             WasConfigCalled = true;
         }
 
