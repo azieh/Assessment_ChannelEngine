@@ -44,6 +44,8 @@ namespace Assessment_ChannelEngine.Console
                         _logger.LogWarning("Unknown Command " + command);
                         break;
                 }
+                _logger.LogInformation(string.Empty);
+                _logger.LogInformation(string.Empty);
             }
         }
 
@@ -60,10 +62,14 @@ namespace Assessment_ChannelEngine.Console
         /// <inheritdoc />
         public void WriteAvailableCommands()
         {
+            _logger.LogInformation("To close please use Ctrl+C");
+            _logger.LogInformation(string.Empty);
             _logger.LogInformation("List of available commands");
+            _logger.LogInformation(string.Empty);
             _logger.LogInformation($"{nameof(_ordersServiceProxy.FetchAllIN_PROGRESS)}");
             _logger.LogInformation($"{nameof(_ordersServiceProxy.GetTop5SoldProductByQuantity)}");
             _logger.LogInformation($"{nameof(_ordersServiceProxy.SetQuantityTo25)}");
+            _logger.LogInformation(string.Empty);
         }
     }
 }
