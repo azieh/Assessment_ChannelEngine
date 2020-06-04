@@ -4,6 +4,6 @@ namespace Assessment_ChannelEngine.Common.Models.ChannelEngine
 {
     public class UpdateProductRequest
     {
-        public List<Product> Products { get; set; } = new List<Product>();
+        public List<ProductResult> Products { get; set; } = new List<ProductResult>();
     }
 }

@@ -4,14 +4,14 @@ using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Assessment_ChannelEngine.Core.Interface;
 using Assessment_ChannelEngine.Core.Wrapper;
-using Assessment_ChannelEngine.Services.Interfaces;
 using Moq;
 using NUnit.Framework;
 
 namespace Assessment_ChannelEngine.UnitTest
 {
-    public class Tests
+    public class GenericRestClientTest
     {
         private Mock<IHttpClientWrapper> _httpClientWrapperMock;
         private IGenericRestClient _sut;

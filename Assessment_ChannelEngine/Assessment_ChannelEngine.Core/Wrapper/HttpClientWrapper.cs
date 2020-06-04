@@ -1,5 +1,5 @@
 ﻿using System.Net.Http;
-using Assessment_ChannelEngine.Services.Interfaces;
+using Assessment_ChannelEngine.Core.Interface;
 
 namespace Assessment_ChannelEngine.Core.Wrapper
 {

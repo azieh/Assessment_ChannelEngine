@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Assessment_ChannelEngine.Services.Interfaces;
+using Assessment_ChannelEngine.Core.Interface;
 
 namespace Assessment_ChannelEngine.Core.Wrapper
 {
@@ -42,7 +42,7 @@ namespace Assessment_ChannelEngine.Core.Wrapper
         {
             EnsureRequiredArgumentAndAction(apiUrl);
 
-            var httpResponse = await _httpClientWrapper.GetStreamAsync(GetCompleteApiUrl(apiUrl));
+            var httpResponse = await _httpClientWrapper.GetStreamAsync(GetCompleteApiUrl(apiUrl, '&'));
 
             return await JsonSerializer.DeserializeAsync<TResult>(httpResponse);
         }
@@ -54,9 +54,10 @@ namespace Assessment_ChannelEngine.Core.Wrapper
             EnsureRequiredArgumentsAndAction(apiUrl, body);
 
             var dataAsString = JsonSerializer.Serialize(body);
-            var content = new StringContent(dataAsString);
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var httpResponse = await _httpClientWrapper.PostAsync(GetCompleteApiUrl(apiUrl), content);
+            var content = new StringContent(dataAsString, Encoding.UTF8, "application/json");
+
+            var httpResponse = await _httpClientWrapper.PostAsync(GetCompleteApiUrl(apiUrl, '?'), content);
+
             var stream = await ReadAndReturnResponseStream(httpResponse);
             return await JsonSerializer.DeserializeAsync<TResult>(stream);
         }
@@ -81,9 +82,9 @@ namespace Assessment_ChannelEngine.Core.Wrapper
             EnsureRequiredArgumentAndAction(apiUrl);
         }
 
-        private string GetCompleteApiUrl(string apiUrl)
+        private string GetCompleteApiUrl(string apiUrl, char separatorSymbol)
         {
-            return $"{_baseUrlAddress}{apiUrl}&apikey={_apiKey}";
+            return $"{_baseUrlAddress}{apiUrl}{separatorSymbol}apikey={_apiKey}";
         }
     }
 }

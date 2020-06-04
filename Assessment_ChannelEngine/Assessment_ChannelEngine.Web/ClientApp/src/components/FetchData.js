@@ -14,31 +14,41 @@ export class FetchData extends Component {
 
     renderProductsTable = (products) => {
         return (
-            <table className='table table-striped' aria-labelledby="tabelLabel">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>EAN</th>
-                        <th>Total quantity</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {products.map(product =>
-                        <tr key={product.name}>
-                            <td>{product.name}</td>
-                            <td>{product.ean}</td>
-                            <td>{product.quantity}</td>
-                            <td>
-                                <button className="btn btn-primary"
-                                    onClick={async () => {await this.updateProductData(product)}}
-                                    disabled={product.isUpdated}>
-                                    Set stock value to 25
-                            </button>
-                            </td>
+            <div>
+                <table className='table table-striped' aria-labelledby="tabelLabel">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>EAN</th>
+                            <th>Total quantity</th>
                         </tr>
-                    )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {products.map(product =>
+                            <tr key={product.name}>
+                                <td>{product.name}</td>
+                                <td>{product.ean}</td>
+                                <td>{product.quantity}</td>
+                                <td>
+                                    {!product.isUpdated ?
+                                        <button className="btn btn-primary"
+                                            onClick={async () => { await this.updateProductData(product) }}>
+                                            Set stock value to 25</button>
+                                        :
+                                        <div className="spinner-border text-primary" role="status">
+                                            <span className="sr-only">Loading...</span>
+                                        </div>
+                                    }
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+                <button className="btn btn-primary"
+                    onClick={async () => { await this.populateProductsData() }}>
+                    Update
+                            </button>
+            </div>
         );
     }
 
@@ -57,17 +67,26 @@ export class FetchData extends Component {
     }
 
     async populateProductsData() {
+        this.setState({ products: [], loading: true });
         const response = await fetch('products/top5');
         const data = await response.json();
         this.setState({ products: data, loading: false });
     }
 
     async updateProductData(product) {
-        product.isUpdated = true;
+        this.setStockValueButtonLoading(product.merchantProductNo, true);
         await fetch(`products/updateStockTo25?merchantProductNo=${product.merchantProductNo}`, {
             method: 'POST'
         });
-        product.isUpdated = false;
+        this.setStockValueButtonLoading(product.merchantProductNo, false);
+    }
+
+    setStockValueButtonLoading = (merchantProductNo, isLoading) => {
+        this.setState(prevState => ({
+            products: prevState.products.map(item => (
+                merchantProductNo === item.merchantProductNo ? { ...item, isUpdated: isLoading } : item
+            ))
+        }));
     }
 }
 

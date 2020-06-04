@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Assessment_ChannelEngine.Services.Interfaces
+namespace Assessment_ChannelEngine.Core.Interface
 {
     public interface IGenericRestClient
     {

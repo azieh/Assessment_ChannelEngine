@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Assessment_ChannelEngine.Common.Interfaces;
 using Assessment_ChannelEngine.Common.Models;
 using Assessment_ChannelEngine.Common.Models.ChannelEngine;
-using Assessment_ChannelEngine.Services.Interfaces;
+using Assessment_ChannelEngine.Core.Interface;
 using Microsoft.Extensions.Configuration;
 
 namespace Assessment_ChannelEngine.Services
@@ -35,14 +35,14 @@ namespace Assessment_ChannelEngine.Services
         /// <inheritdoc />
         public async Task<ICollection<ProductVm>> GetTop5ProductSold()
         {
-            var lines = new List<Line>();
+            var lines = new List<LineResult>();
             var orders = await GetAllOrdersInStatusInProgress();
 
             foreach (var orderLines in orders.Content.Select(_ => _.Lines))
                 lines.AddRange(orderLines.ToList());
 
             lines = lines.GroupBy(_ => _.MerchantProductNo).Select(_ =>
-                    new Line
+                    new LineResult
                     {
                         MerchantProductNo = _.Key,
                         Quantity = _.Sum(x => x.Quantity)
@@ -51,19 +51,26 @@ namespace Assessment_ChannelEngine.Services
                 .Take(5)
                 .ToList();
 
-            var query = BuildProductsApiQuery(lines);
+            var productsResult = await ProductsResult(lines);
 
-            var productsResult = await _restClient.GetAsync<ProductsResult>($"products?{query}");
+            var productsVmList = new List<ProductVm>();
+            foreach (var line in lines)
+            {
+                var matchProduct = productsResult?.Content?
+                                       .FirstOrDefault(_ => string.Equals(_.MerchantProductNo, line.MerchantProductNo))
+                                   ?? throw new ApplicationException(
+                                       $"Missing information about product {line.MerchantProductNo}");
 
-            return productsResult.Content.Select(_ => new ProductVm
+                productsVmList.Add(new ProductVm
                 {
-                    Name = _.Name,
-                    Ean = _.Ean,
-                    MerchantProductNo = _.MerchantProductNo,
-                    Quantity = lines
-                        .First(line => string.Equals(line.MerchantProductNo, _.MerchantProductNo))
-                        .Quantity
-                })
+                    Quantity = line.Quantity,
+                    MerchantProductNo = line.MerchantProductNo,
+                    Name = matchProduct.Name,
+                    Ean = matchProduct.Ean
+                });
+            }
+
+            return productsVmList
                 .OrderByDescending(_ => _.Quantity)
                 .ToList();
         }
@@ -71,18 +78,36 @@ namespace Assessment_ChannelEngine.Services
         /// <inheritdoc />
         public async Task UpdateProductStockTo25(string merchantProductNo)
         {
-            var product = new Product
-            {
-                MerchantProductNo = merchantProductNo,
-                Stock = 25
-            };
-            var requestModel = new UpdateProductRequest();
-            requestModel.Products.Add(product);
+            if (string.IsNullOrEmpty(merchantProductNo))
+                throw new ArgumentNullException(nameof(merchantProductNo));
 
-            await _restClient.PostAsync<UpdateProductRequest, UpdateProductRequest>("products", requestModel);
+            var product = new LineResult
+            {
+                MerchantProductNo = merchantProductNo
+            };
+            //Call to have up to date product
+            var productsResult = await ProductsResult(new List<LineResult> {product});
+
+            var firstProduct = productsResult?.Content?.FirstOrDefault()
+                               ?? throw new ApplicationException("Product not exist");
+
+            firstProduct.Stock = 25;
+
+            await _restClient.PostAsync<UpdateProductResult, UpdateProductRequest>
+            ("products",
+                new UpdateProductRequest
+                {
+                    Products = new List<ProductResult> {firstProduct}
+                });
         }
 
-        private string BuildProductsApiQuery(List<Line> lines)
+        private async Task<ProductsResult> ProductsResult(List<LineResult> lines)
+        {
+            var query = BuildProductsApiQuery(lines);
+            return await _restClient.GetAsync<ProductsResult>($"products?{query}");
+        }
+
+        private string BuildProductsApiQuery(List<LineResult> lines)
         {
             var query = string.Empty;
             lines.ForEach(_ => query += $"merchantProductNoList={_.MerchantProductNo}&");
