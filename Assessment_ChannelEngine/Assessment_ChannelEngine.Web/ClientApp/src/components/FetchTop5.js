@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-export class FetchData extends Component {
-    static displayName = FetchData.name;
+export class FetchTop5 extends Component {
+    static displayName = FetchTop5.name;
 
     constructor(props) {
         super(props);
@@ -59,8 +59,8 @@ export class FetchData extends Component {
 
         return (
             <div>
-                <h1 id="tabelLabel" >Orders form channelengine</h1>
-                <p>This component demonstrates fetching data from the server.</p>
+                <h1 id="tabelLabel" >Products form channelengine</h1>
+                <p>This component demonstrates fetching top 5 products from orders in status IN_PROGRESS</p>
                 {contents}
             </div>
         );
@@ -68,14 +68,14 @@ export class FetchData extends Component {
 
     async populateProductsData() {
         this.setState({ products: [], loading: true });
-        const response = await fetch('products/top5');
+        const response = await fetch('orders/top5');
         const data = await response.json();
         this.setState({ products: data, loading: false });
     }
 
     async updateProductData(product) {
         this.setStockValueButtonLoading(product.merchantProductNo, true);
-        await fetch(`products/updateStockTo25?merchantProductNo=${product.merchantProductNo}`, {
+        await fetch(`orders/updateStockTo25?merchantProductNo=${product.merchantProductNo}`, {
             method: 'POST'
         });
         this.setStockValueButtonLoading(product.merchantProductNo, false);
@@ -90,4 +90,4 @@ export class FetchData extends Component {
     }
 }
 
-export default FetchData
+export default FetchTop5

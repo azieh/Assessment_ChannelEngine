@@ -1,18 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Assessment_ChannelEngine.Common.Interfaces;
 using Assessment_ChannelEngine.Common.Models;
+using Assessment_ChannelEngine.Common.Models.ChannelEngine;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assessment_ChannelEngine.Web.Controllers
 {
     [ApiController]
-    [Route("products")]
-    public class ProductsController : ControllerBase
+    [Route("orders")]
+    public class OrdersController : ControllerBase
     {
         private readonly IOrdersService _ordersService;
 
-        public ProductsController(IOrdersService ordersService)
+        public OrdersController(IOrdersService ordersService)
         {
             _ordersService = ordersService;
         }
@@ -22,6 +24,14 @@ namespace Assessment_ChannelEngine.Web.Controllers
         public async Task<IEnumerable<ProductVm>> GetTop5()
         {
             return await _ordersService.GetTop5ProductSold();
+        }
+
+        [HttpGet]
+        [Route("InProcess")]
+        public async Task<IEnumerable<OrderResult>> GetAllOrdersInProcess()
+        {
+            var result = await _ordersService.GetAllOrdersInStatusInProgress();
+            return result.Content.ToList();
         }
 
         [HttpPost]

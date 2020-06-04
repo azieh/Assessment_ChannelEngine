@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
-import FetchData from './FetchData'
+import FetchOrdersInProgress from './FetchOrdersInProgress'
+import FetchTop5 from './FetchTop5'
 
 export class Layout extends Component {
   static displayName = Layout.name;
@@ -9,7 +10,8 @@ export class Layout extends Component {
     return (
       <div>
         <Container>
-        <FetchData></FetchData>
+        <FetchOrdersInProgress></FetchOrdersInProgress>
+        <FetchTop5></FetchTop5>
         </Container>
       </div>
     );

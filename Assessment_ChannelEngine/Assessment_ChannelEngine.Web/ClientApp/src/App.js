@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { Layout } from './components/Layout';
-import { FetchData } from './components/FetchData';
+import { FetchTop5 } from './components/FetchTop5';
 
 import './custom.css'
 
@@ -11,7 +11,7 @@ export default class App extends Component {
   render () {
     return (
       <Layout>
-        <Route path='/fetch-data' component={FetchData} />
+        <Route path='/fetchTop5' component={FetchTop5} />
       </Layout>
     );
   }
