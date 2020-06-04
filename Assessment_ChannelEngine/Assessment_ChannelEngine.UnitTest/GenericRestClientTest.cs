@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Assessment_ChannelEngine.Core.Wrapper;
 using Assessment_ChannelEngine.Services.Interfaces;
 using Moq;
@@ -12,8 +13,8 @@ namespace Assessment_ChannelEngine.UnitTest
 {
     public class Tests
     {
-        private IGenericRestClient _sut;
         private Mock<IHttpClientWrapper> _httpClientWrapperMock;
+        private IGenericRestClient _sut;
 
         [SetUp]
         public void Setup()
@@ -21,6 +22,7 @@ namespace Assessment_ChannelEngine.UnitTest
             _httpClientWrapperMock = new Mock<IHttpClientWrapper>();
             _sut = new GenericRestClient(_httpClientWrapperMock.Object);
         }
+
         [TearDown]
         public void TearDown()
         {
@@ -38,28 +40,32 @@ namespace Assessment_ChannelEngine.UnitTest
         public void GenericRestClient_PostAsync_throw_exception_when_Configure_method_was_not_called_before()
         {
             //Act && Assert
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await _sut.PostAsync<string, object>("http://someUrl.com", new object()));
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                await _sut.PostAsync<string, object>("http://someUrl.com", new object()));
         }
 
         [Test]
         public void GenericRestClient_PostAsync_throw_exception_when_apiUrl_isNull()
         {
             //Act && Assert
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await _sut.PostAsync<string, object>(null, new object()));
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+                await _sut.PostAsync<string, object>(null, new object()));
         }
 
         [Test]
         public void GenericRestClient_PostAsync_throw_exception_when_body_isNull()
         {
             //Act && Assert
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await _sut.PostAsync<string, object>("http://someUrl.com", null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+                await _sut.PostAsync<string, object>("http://someUrl.com", null));
         }
 
         [Test]
         public void GenericRestClient_GetAsync_throw_exception_when_Configure_method_was_not_called_before()
         {
             //Act && Assert
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await _sut.GetAsync<string>("http://someUrl.com"));
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                await _sut.GetAsync<string>("http://someUrl.com"));
         }
 
         [Test]
@@ -84,11 +90,12 @@ namespace Assessment_ChannelEngine.UnitTest
         }
 
         [Test]
-        public async System.Threading.Tasks.Task GenericRestClient_GetAsync_return_ok()
+        public async Task GenericRestClient_GetAsync_return_ok()
         {
             //Arrange
             var dataAsString = JsonSerializer.Serialize("Result");
-            _httpClientWrapperMock.Setup(_ => _.GetStreamAsync(It.IsAny<string>())).ReturnsAsync(() => GenerateStreamFromString(dataAsString));
+            _httpClientWrapperMock.Setup(_ => _.GetStreamAsync(It.IsAny<string>()))
+                .ReturnsAsync(() => GenerateStreamFromString(dataAsString));
             _sut.Configure("http://someUrl.com/", "1234");
 
             //Act
@@ -99,13 +106,14 @@ namespace Assessment_ChannelEngine.UnitTest
         }
 
         [Test]
-        public async System.Threading.Tasks.Task GenericRestClient_PostAsync_return_ok()
+        public async Task GenericRestClient_PostAsync_return_ok()
         {
             //Arrange
             var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK);
             var dataAsString = JsonSerializer.Serialize("Result");
             httpResponseMessage.Content = new StringContent(dataAsString);
-            _httpClientWrapperMock.Setup(_ => _.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>())).ReturnsAsync(() => httpResponseMessage);
+            _httpClientWrapperMock.Setup(_ => _.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
+                .ReturnsAsync(() => httpResponseMessage);
             _sut.Configure("http://someUrl.com/", "1234");
 
             //Act
@@ -115,7 +123,7 @@ namespace Assessment_ChannelEngine.UnitTest
             Assert.AreEqual("Result", result);
         }
 
-        private  Stream GenerateStreamFromString(string s)
+        private Stream GenerateStreamFromString(string s)
         {
             var stream = new MemoryStream();
             var writer = new StreamWriter(stream);

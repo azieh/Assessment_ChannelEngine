@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Assessment_ChannelEngine.Common.Models.ChannelEngine
+﻿namespace Assessment_ChannelEngine.Common.Models.ChannelEngine
 {
     public class OrdersResult
     {
@@ -13,7 +11,6 @@ namespace Assessment_ChannelEngine.Common.Models.ChannelEngine
         public int Id { get; set; }
         public string Status { get; set; }
         public Line[] Lines { get; set; }
-        
     }
 
     public class Line

@@ -5,6 +5,5 @@ namespace Assessment_ChannelEngine.Core.Wrapper
 {
     internal class HttpClientWrapper : HttpClient, IHttpClientWrapper
     {
-        
     }
 }

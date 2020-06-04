@@ -20,7 +20,5 @@ namespace Assessment_ChannelEngine.Console.EventHandler
             System.Console.WriteLine($"  Cancel property: {args.Cancel}");
             System.Console.WriteLine("The read operation will resume...\n");
         }
-
-
     }
 }

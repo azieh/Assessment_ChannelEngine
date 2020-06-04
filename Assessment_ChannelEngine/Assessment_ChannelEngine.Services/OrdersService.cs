@@ -14,49 +14,56 @@ namespace Assessment_ChannelEngine.Services
     {
         private readonly IConfiguration _configuration;
         private readonly IGenericRestClient _restClient;
+
         public OrdersService(IConfiguration configuration, IGenericRestClient restClient)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _restClient = restClient ?? throw new ArgumentNullException(nameof(restClient));
             _restClient.Configure(GetApiUrl, GetApiKey);
         }
+
+        private string GetApiUrl => _configuration["ChannelEngineApi:BaseUrl"];
+        private string GetApiKey => _configuration["ChannelEngineApi:ApiKey"];
+
         /// <inheritdoc />
-        public async Task<OrdersResult> GetAllOrdersInStatusInProgress() =>
-            await _restClient.GetAsync<OrdersResult>("orders?statuses=IN_PROGRESS");
+        public async Task<OrdersResult> GetAllOrdersInStatusInProgress()
+        {
+            return await _restClient.GetAsync<OrdersResult>("orders?statuses=IN_PROGRESS");
+        }
 
 
         /// <inheritdoc />
         public async Task<ICollection<ProductVm>> GetTop5ProductSold()
         {
-            List<Line> lines = new List<Line>();
-            OrdersResult orders = await GetAllOrdersInStatusInProgress();
+            var lines = new List<Line>();
+            var orders = await GetAllOrdersInStatusInProgress();
 
             foreach (var orderLines in orders.Content.Select(_ => _.Lines))
                 lines.AddRange(orderLines.ToList());
 
             lines = lines.GroupBy(_ => _.MerchantProductNo).Select(_ =>
-                new Line
-                {
-                    MerchantProductNo = _.Key,
-                    Quantity = _.Sum(x => x.Quantity)
-                })
+                    new Line
+                    {
+                        MerchantProductNo = _.Key,
+                        Quantity = _.Sum(x => x.Quantity)
+                    })
                 .OrderByDescending(_ => _.Quantity)
                 .Take(5)
                 .ToList();
 
-            string query = BuildProductsApiQuery(lines);
+            var query = BuildProductsApiQuery(lines);
 
             var productsResult = await _restClient.GetAsync<ProductsResult>($"products?{query}");
 
             return productsResult.Content.Select(_ => new ProductVm
-            {
-                Name = _.Name,
-                Ean = _.Ean,
-                MerchantProductNo = _.MerchantProductNo,
-                Quantity = lines
-                    .First(line => string.Equals(line.MerchantProductNo, _.MerchantProductNo))
-                    .Quantity
-            })
+                {
+                    Name = _.Name,
+                    Ean = _.Ean,
+                    MerchantProductNo = _.MerchantProductNo,
+                    Quantity = lines
+                        .First(line => string.Equals(line.MerchantProductNo, _.MerchantProductNo))
+                        .Quantity
+                })
                 .OrderByDescending(_ => _.Quantity)
                 .ToList();
         }
@@ -77,13 +84,10 @@ namespace Assessment_ChannelEngine.Services
 
         private string BuildProductsApiQuery(List<Line> lines)
         {
-            string query = string.Empty;
+            var query = string.Empty;
             lines.ForEach(_ => query += $"merchantProductNoList={_.MerchantProductNo}&");
             query.Remove(query.Length - 1); // delete last &
             return query;
         }
-
-        private string GetApiUrl => _configuration["ChannelEngineApi:BaseUrl"];
-        private string GetApiKey => _configuration["ChannelEngineApi:ApiKey"];
     }
 }

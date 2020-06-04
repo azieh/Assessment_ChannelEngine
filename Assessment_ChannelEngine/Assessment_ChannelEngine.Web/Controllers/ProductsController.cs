@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Assessment_ChannelEngine.Common.Interfaces;
 using Assessment_ChannelEngine.Common.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Assessment_ChannelEngine.Web.Controllers
 {
@@ -13,12 +10,10 @@ namespace Assessment_ChannelEngine.Web.Controllers
     [Route("products")]
     public class ProductsController : ControllerBase
     {
-        private readonly ILogger<ProductsController> _logger;
         private readonly IOrdersService _ordersService;
 
-        public ProductsController(ILogger<ProductsController> logger, IOrdersService ordersService)
+        public ProductsController(IOrdersService ordersService)
         {
-            _logger = logger;
             _ordersService = ordersService;
         }
 

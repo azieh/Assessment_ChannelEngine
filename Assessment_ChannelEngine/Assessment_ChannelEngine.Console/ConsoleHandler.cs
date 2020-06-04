@@ -9,6 +9,7 @@ namespace Assessment_ChannelEngine.Console
         private readonly ILogger<ConsoleHandler> _logger;
         private readonly IOrdersServiceProxy _ordersServiceProxy;
         private ConsoleKeyInfo _cki;
+
         public ConsoleHandler(ILogger<ConsoleHandler> logger, IOrdersServiceProxy ordersServiceProxy)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -18,6 +19,7 @@ namespace Assessment_ChannelEngine.Console
             // Establish an event handler to process key press events.
             System.Console.CancelKeyPress += GetCancelEventHandler;
         }
+
         /// <inheritdoc />
         public void Start()
         {
@@ -52,7 +54,7 @@ namespace Assessment_ChannelEngine.Console
 
             _logger.LogInformation($"  Key pressed: {args.SpecialKey}");
 
-            System.Environment.Exit(0);
+            Environment.Exit(0);
         }
 
         /// <inheritdoc />

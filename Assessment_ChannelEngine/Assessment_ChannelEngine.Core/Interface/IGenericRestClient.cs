@@ -8,15 +8,16 @@ namespace Assessment_ChannelEngine.Services.Interfaces
         ///     Returns true if Configuration was called first
         /// </summary>
         bool IsSetupCalled { get; }
+
         void Configure(string baseUrlAddress, string apiKey);
 
         /// <summary>
         ///     Perform GET & returns multiple/all items from resource
-        ///     
         /// </summary>
         /// <typeparam name="TResult">expected results type</typeparam>
         /// <param name="apiUrl">
-        ///     Added to the base address to make the full url of the GET method, e.g. "products?page=1" to get page 1 of the products
+        ///     Added to the base address to make the full url of the GET method, e.g. "products?page=1" to get page 1 of the
+        ///     products
         /// </param>
         /// <returns>The items requested</returns>
         /// <remarks>GET = read call</remarks>

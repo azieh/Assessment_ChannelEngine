@@ -1,11 +1,10 @@
-﻿using System;
-using Assessment_ChannelEngine.Console.Interface;
+﻿using Assessment_ChannelEngine.Console.Interface;
 
 namespace Assessment_ChannelEngine.Console
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var consoleHandler = new RegisterContainers().GetService<IConsoleHandler>();
 

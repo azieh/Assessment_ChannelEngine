@@ -1,7 +1,6 @@
 using Assessment_ChannelEngine.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,10 +24,7 @@ namespace Assessment_ChannelEngine.Web
             services.AddSingleton(Configuration);
             services.AddResponseCompression();
             // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/build";
-            });
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
 
             ServicesContainers.ConfigureServices(services);
         }
@@ -56,10 +52,7 @@ namespace Assessment_ChannelEngine.Web
             {
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
+                if (env.IsDevelopment()) spa.UseReactDevelopmentServer("start");
             });
         }
     }

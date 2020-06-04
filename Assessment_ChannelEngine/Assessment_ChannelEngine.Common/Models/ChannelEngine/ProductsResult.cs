@@ -4,7 +4,6 @@
     {
         public Product[] Content { get; set; }
         public bool Success { get; set; }
-        
     }
 
     public class Product
@@ -14,5 +13,4 @@
         public string Ean { get; set; }
         public int Stock { get; set; }
     }
-
 }
