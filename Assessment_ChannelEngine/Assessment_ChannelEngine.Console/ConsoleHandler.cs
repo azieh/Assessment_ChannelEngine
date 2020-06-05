@@ -8,7 +8,6 @@ namespace Assessment_ChannelEngine.Console
     {
         private readonly ILogger<ConsoleHandler> _logger;
         private readonly IOrdersServiceProxy _ordersServiceProxy;
-        private ConsoleKeyInfo _cki;
 
         public ConsoleHandler(ILogger<ConsoleHandler> logger, IOrdersServiceProxy ordersServiceProxy)
         {
@@ -62,9 +61,9 @@ namespace Assessment_ChannelEngine.Console
         /// <inheritdoc />
         public void WriteAvailableCommands()
         {
-            _logger.LogInformation("To close please use Ctrl+C");
+            _logger.LogInformation("To close application please use Ctrl+C");
             _logger.LogInformation(string.Empty);
-            _logger.LogInformation("List of available commands");
+            _logger.LogInformation("List of available commands (please type one of listed command and press enter)");
             _logger.LogInformation(string.Empty);
             _logger.LogInformation($"{nameof(_ordersServiceProxy.FetchAllIN_PROGRESS)}");
             _logger.LogInformation($"{nameof(_ordersServiceProxy.GetTop5SoldProductByQuantity)}");

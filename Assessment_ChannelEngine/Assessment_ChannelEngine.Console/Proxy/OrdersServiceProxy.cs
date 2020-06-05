@@ -32,7 +32,7 @@ namespace Assessment_ChannelEngine.Console.Proxy
             {
                 var updateTask = _ordersService.UpdateProductStockTo25(command);
                 updateTask.Wait();
-                _logger.LogInformation("Success");
+                _logger.LogInformation("Update success");
                 _logger.LogInformation(string.Empty);
             }
             catch (Exception e)
